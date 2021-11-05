@@ -69,19 +69,15 @@ function compruebaCorreo($newCorreo, $correos)
 
         // get possible dupes
         $correo = substr($correo, 0, strlen($newCorreo));
-        // echo "<br> <br> $correo <br><br>";
 
         // adding a number after the email if duplicated
         if ($correo == $newCorreo) {
 
             $i++;
-            // $newCorreo = $newCorreo . "." . $i;
-            // check this recursively
-            // compruebaCorreo($newCorreo, $correos);
         }
     }
 
-    $newCorreo = $newCorreo . "." . $i; 
+    $newCorreo = $newCorreo . "." . $i;
 
     return $newCorreo;
 }
