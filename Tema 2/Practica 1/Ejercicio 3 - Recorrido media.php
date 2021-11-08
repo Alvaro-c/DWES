@@ -76,7 +76,7 @@ for ($i = 0; $i < count($data); $i++) {
     $totalDatos++;
 
     // Moda
-    switch ($i) {
+    switch ($data[$i]) {
 
         case 0:
 
@@ -139,6 +139,7 @@ $media = $sum / $totalDatos;
 array_push($modaArray, $cero, $uno, $dos, $tres, $cuatro, $cinco, $seis, $siete, $ocho, $nueve);
 
 $moda = max($modaArray);
+$modaKey = array_search($moda, $modaArray);
 $varianza = ($countVarianza / count($data)) - ($media * $media);
 
 // mediana
@@ -190,7 +191,7 @@ function cuartil3($arrayOrdenado) {
 echo ("El array tiene " . count($data) . " posiciones.<br>");
 echo ("El recorrido es $recorrido .<br>");
 echo ("La media es $media. <br>");
-echo ("La moda es $moda. <br>");
+echo ("La moda es $modaKey. <br>");
 mediana($arrayOrdenado);
 echo ("La varianza es $varianza .<br>");
 echo ("La desviación típica es " . sqrt($varianza))  . ".<br>";
