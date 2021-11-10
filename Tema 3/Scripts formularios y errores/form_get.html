@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Formulario usando get</title>		
+		<meta charset = "UTF-8">
+	</head>
+	<body>
+		<section>
+			<h2>Sin comprobar nombre</h2>
+			<form action = "hola_nombre.php" method = "get">			
+				<label for="nombre"> Introduce tu nombre: </label>
+				<input id="nombre" name = "nombre" type = "text">				
+				<input type = "submit">
+			</form>
+		</section>
+		<section>
+			<h2>Comprobando el nombre</h2>
+			<form action = "hola_comprobacion.php" method = "get">			
+				<label for="nombre"> Introduce tu nombre: </label>
+				<input id="nombre" name = "nombre" type = "text">				
+				<input type = "submit">
+			</form>
+		</section>
+	</body>
+</html>
