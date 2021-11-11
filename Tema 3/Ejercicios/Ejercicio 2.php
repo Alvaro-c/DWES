@@ -1,7 +1,8 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	if ($_POST['usuario'] === "usu" and $_POST["clave"] === "12") {
-		header("Location: redireccionado.php");
+		header("Location: Ejercicio2Redireccionando.php?usuario=" . $_POST["usuario"] . "&clave=". $_POST["clave"]);
+		// Se pasan los datos en la URL. En otro archivo se pueden recuperar en la var superglobal GET
 	} else {
 		$err = true;
 	}
