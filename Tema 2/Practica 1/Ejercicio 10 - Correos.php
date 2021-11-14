@@ -10,6 +10,11 @@ function correos($fullName, $dni, &$correos)
     // get email
     // pass name to lower case
     $fullName = strtolower($fullName);
+    $fullName = str_replace(" del ", " ", $fullName);
+    $fullName = str_replace(" de la ", " ", $fullName);
+    $fullName = str_replace(" de ", " ", $fullName);
+    $fullName = str_replace(" de los ", " ", $fullName);
+
 
     // set an empty string to built the email
     $newCorreo = "";
@@ -39,6 +44,11 @@ function correos($fullName, $dni, &$correos)
 
     // split the surnames
     $surnames = $fullNameArray[0];
+    $surnames = str_replace(" del ", " ", $surnames);
+    $surnames = str_replace(" de la ", " ", $surnames);
+    $surnames = str_replace(" de ", " ", $surnames);
+    $surnames = str_replace(" de los ", " ", $surnames);
+
     $surnamesArray = explode(" ", $surnames);
 
     // putting together name and first 3 letters of surnames
@@ -67,15 +77,17 @@ function compruebaCorreo($newCorreo, $correos)
         // delete @dwes.es
         $correo = substr($correo, 0, strlen($correo) - 8);
 
+        // get possible dupes
+        $correo = substr($correo, 0, strlen($newCorreo));
+
         // adding a number after the email if duplicated
         if ($correo == $newCorreo) {
 
             $i++;
-            $newCorreo = $newCorreo . "." . $i;
-            // check this recursively
-            compruebaCorreo($newCorreo, $correos);
         }
     }
+
+    $newCorreo = $newCorreo . "." . $i;
 
     return $newCorreo;
 }
@@ -101,7 +113,7 @@ printArray($correos);
 echo ("<br> <br>");
 
 // adding another user
-correos("Canas González, Alvaro Francisco Nicolas", "70260136B", $correos);
+correos("Canas de la González, Alvaro Francisco Nicolas", "70260136B", $correos);
 printArray($correos);
 echo ("<br> <br>");
 
@@ -111,6 +123,6 @@ printArray($correos);
 echo ("<br> <br>");
 
 // adding a forth user
-correos("Canas González, Alvaro Francisco Nicolas", "70260138B", $correos);
+correos("Canas González, Alvaro de la fuente Nicolas", "70260138B", $correos);
 printArray($correos);
 echo ("<br> <br>");

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 2 - Formulario</title>
+    <link href="/Tema 3/estilos.css" rel="stylesheet">
+</head>
+
+<body>
+
+
+    <form action="cookieIdiomas.php" method="post">
+
+        <fieldset>
+
+            <legend>Completar</legend>
+            <br>
+            Elija un idioma             
+            <input type="radio" id="es" name="idioma" value="es"><label for="es">Español</label>
+            <input type="radio" id="en" name="idioma" value="en"><label for="en">Inglés</label>
+            <br><br>
+            Elija un color <input type="color">
+            <br>
+            <textarea placeholder="Por favor, escriba aquí"></textarea>
+            <br>
+            <select id="lenguaje" name="lenguaje">
+                <option>Java</option>
+                <option>C#</option>
+                <option>Python</option>
+
+            </select>
+            <br>
+            <input type="checkbox" id="ASIR" name="ASIR" value="ASIR"><label for="ASIR">ASIR</label>
+            <input type="checkbox" id="DAM" name="DAM" value="DAM"><label for="DAM">DAM</label>
+            <input type="checkbox" id="DAW" name="DAW" value="DAW"><label for="DAW">DAW</label>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Rellene las opciones siguientes</legend>
+
+            <label for="fecha">Elija una fecha: </label><input type="date" id="fecha"><br>
+            <label for="adjunto">Elija un fichero: </label><input type="file" id="adjunto"><br>
+            <select id="modulo" name="modulo" multiple>
+                <option value="SMIR">SMIR</option>
+                <option value="ASIR">ASIR</option>
+                <option value="DAM">DAM</option>
+                <option value="DAW">DAW</option>
+
+            </select>
+
+
+
+
+
+
+
+
+
+
+        </fieldset>
+
+
+
+        <input type="submit">
+
+
+
+
+    </form>
+
+</body>
+
+</html>
