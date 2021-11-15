@@ -1,12 +1,53 @@
 <?php
 
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $agenda = stringToArray($_COOKIE['agenda']);
+    setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
+}
 
-$agenda = array();
-$agenda["Alvaro"] = "email@email.com";
-$agenda["Pepe"] = "email2@email.com";
-$agenda["Juan"] = "email3@email.com";
-$agenda["Carlos"] = "email4@email.com";
+if (isset($_COOKIE['agenda'])) {
 
+    $agenda = stringToArray($_COOKIE['agenda']);
+    
+
+} else {
+
+    $agenda = array();
+    $agenda["Alvaro"] = "email@email.com";
+    $agenda["Pepe"] = "email2@email.com";
+    $agenda["Juan"] = "email3@email.com";
+    $agenda["Carlos"] = "email4@email.com";
+    setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
+}
+
+
+function arrayToString($array)
+{
+
+    $string = "";
+    foreach ($array as $nombre => $email) {
+
+        $string = $string . $nombre . ":" . $email . ";";
+    }
+    return $string;
+}
+
+function stringToArray($string)
+{
+
+    $finalArray = array();
+    $array = explode(";", $string);
+
+    foreach ($array as $nameAndEmail) {
+
+        $arrayNameAndEmail = explode(":", $nameAndEmail);
+        $name = $arrayNameAndEmail[0];
+        $email = $arrayNameAndEmail[1];
+
+        $finalArray[$name] = $email;
+    }
+    return $finalArray;
+}
 
 function addContact(&$agenda)
 {
@@ -40,7 +81,6 @@ function isDupe($array, $newName)
 // Primera carga
 if (!isset($_POST["submit"])) {
 
-
 ?>
 
     <!-- Formulario HTML por primera vez  -->
@@ -63,7 +103,7 @@ if (!isset($_POST["submit"])) {
         <label for="email"> Introduce tu email: </label>
         <input id="email" name="email" type="text"><br><br>
 
-        <input type="submit" value="submit" name="submit">
+        <input type="submit" name="submit" value="submit">
     </form>
 
 

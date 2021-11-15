@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		<meta charset = "UTF-8">
 	</head>
 	<body>	
-		<?php if(isset($_GET["redirigido"])){
+		<?php if(isset($_GET["redirigido"])){ // Esta linea se ejecutará cuando se haya ido a la pantalla principal in hacer login
 			echo "<p>Haga login para continuar</p>";
 		}?>
 		<?php if(isset($err) and $err == true){
