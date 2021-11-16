@@ -1,17 +1,14 @@
 <?php
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $agenda = stringToArray($_COOKIE['agenda']);
-    setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
-}
+// Compruebo si existe una cookie
 
 if (isset($_COOKIE['agenda'])) {
 
+    // Si existe una cookie, la convierto en array (agenda)
     $agenda = stringToArray($_COOKIE['agenda']);
-    
-
 } else {
 
+    // Si no hay cookie, creo una agenda con valores por defecto y la paso a una cookie
     $agenda = array();
     $agenda["Alvaro"] = "email@email.com";
     $agenda["Pepe"] = "email2@email.com";
@@ -19,6 +16,14 @@ if (isset($_COOKIE['agenda'])) {
     $agenda["Carlos"] = "email4@email.com";
     setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
 }
+
+
+// Si se accede a través de POST (con datos de email)
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     $agenda = stringToArray($_COOKIE['agenda']);
+//     addContact($agenda);
+//     setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
+// }
 
 
 function arrayToString($array)
@@ -34,9 +39,10 @@ function arrayToString($array)
 
 function stringToArray($string)
 {
-
+    // AQUI ES DONDE ES UN JALEO
     $finalArray = array();
     $array = explode(";", $string);
+    unset($array[count($array) - 1]);
 
     foreach ($array as $nameAndEmail) {
 
@@ -123,6 +129,7 @@ if (!isset($_POST["submit"])) {
     if (!isDupe($agenda, $_POST["name"]) && !empty($_POST["email"])) {
 
         addContact($agenda);
+        setcookie('agenda', arrayToString($agenda), time() + 3600 * 24);
     } else if (isDupe($agenda, $_POST["name"]) && !empty($_POST["email"])) {
 
         $agenda[$_POST["name"]] = $_POST["email"];
