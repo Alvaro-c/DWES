@@ -1,8 +1,8 @@
 <?php
 
-setcookie('PHPSESSID', '', time() - 3600 * 24);
+session_start();
 
-unset($_SESSION);
 session_destroy();
 
+//echo '<p><a href="index.php"> Volver a inicio</a></p>';
 header("Location: index.php");
