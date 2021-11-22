@@ -1,6 +1,6 @@
 <?php
 /*  La función recursiva termina cuando llega a 1.
-El número de pasos se puede obtener con una bariable global, haciendo uso de &GLOBALS, o pasando el dato de los pasos por referencia a la función */
+El número de pasos se puede obtener con una variable global, haciendo uso de &GLOBALS, o pasando el dato de los pasos por referencia a la función */
 
 function collatz($n)
 {
