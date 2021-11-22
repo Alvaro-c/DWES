@@ -32,5 +32,3 @@ if (isset($_SESSION['name']) && $_SESSION['name'] != "" ) {
 echo '<p><a href="index.php"> Volver a inicio</a></p>';
 
 }
-
-?>
