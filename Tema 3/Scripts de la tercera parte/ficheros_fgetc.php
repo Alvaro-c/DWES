@@ -5,7 +5,7 @@
 	}else{
 		while( !feof($fich) ){
 			$car = fgetc($fich);			
-			echo $car;
+			echo $car. "<br>";
 		}
 	}
 	fclose($fich); 

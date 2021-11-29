@@ -11,4 +11,4 @@
 	}else{
 		echo " fichero_no_existe.txt se abrió con éxito<br>";
 	}
-	fclose($fich); 
+	//fclose($fich); 
