@@ -2,11 +2,12 @@
 
 
 // Función para comprobar si un usuario ya existe
-function compruebaUser($nuevoUser) {
+function compruebaUser($nuevoUser)
+{
 
     $fichero = fopen("acceso.txt", "r");
 
-    while(!feof($fichero)) {
+    while (!feof($fichero)) {
 
         $usuario = fscanf($fichero, "%s %s %d");
 
@@ -14,19 +15,16 @@ function compruebaUser($nuevoUser) {
 
             return true;
         }
-
     }
 
     return false;
-
 }
 
 session_start();
 
-if($_POST['submit'] == 'submit') {
+if ($_POST['submit'] == 'submit') {
 
     $_SESSION['submit'] = 'submit';
-
 }
 
 // Compronar si el nombre está escrito y no tiene caracteres raros
@@ -60,9 +58,16 @@ if ($_POST['usuario'] == "" || !ctype_alnum($_POST['usuario'])) {
     $usuario = $_POST['usuario'];
     $password = $_POST['password'];
     $rol = "0";
+    // Falta comprobar que esto funciona el añadir el primer user
 
-    $archivo = file_put_contents("acceso.txt", "\n$usuario $password $rol", FILE_APPEND);
-    
+    if (filesize("acceso.txt") > 0) {
+
+        $archivo = file_put_contents("acceso.txt", "\n$usuario $password $rol", FILE_APPEND);
+    } else {
+
+        $archivo = file_put_contents("acceso.txt", "$usuario $password $rol", FILE_APPEND);
+    }
+
     echo "Usuario guardado<br>";
     echo '<a href="index.php"> Volver a inicio</a>';
 }
