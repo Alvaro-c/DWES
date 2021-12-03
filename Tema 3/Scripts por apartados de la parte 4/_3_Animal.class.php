@@ -1,5 +1,6 @@
 <?php
-class Animal {
+class Animal
+{
     // Declaración de atributos
     private $color = "gris";
     public $peso = 10;
@@ -12,26 +13,31 @@ class Animal {
         $this->peso = $peso; // Inicialización del peso.
     }
     //métodos mágicos
-    public function __get($nombre) {
+    public function __get($nombre)
+    {
         echo "__get <br>";
         if (isset($this->tab_atributos[$nombre]))
             return $this->tab_atributos[$nombre];
     }
-    public function __set($nombre, $valor) {
+    public function __set($nombre, $valor)
+    {
         echo "__set <br>";
         $this->tab_atributos[$nombre] = $valor;
     }
-    public function __isset($nombre) {
+    public function __isset($nombre)
+    {
         return isset($this->tab_atributos[$nombre]);
     }
-    public function __call($nombre, $argumentos) {
+    public function __call($nombre, $argumentos)
+    {
         echo "El método " . $nombre . " no es accesible. Sus argumentos
-        eran los siguientes :" . implode(",", $argumentos) . "<br>";
+eran los siguientes :" . implode(",", $argumentos) . "<br>";
         if (method_exists($this, $nombre)) {
             $this->$nombre(implode(",", $argumentos));
         }
     }
-    public static function __callStatic($nombre, $argumentos) {
+    public static function __callStatic($nombre, $argumentos)
+    {
         echo "El método estático " . $nombre . " no es accesible.
 Sus argumentos eran los siguientes :" . implode(",", $argumentos)
             . "<br>";
@@ -41,11 +47,13 @@ Sus argumentos eran los siguientes :" . implode(",", $argumentos)
         }
     }
     //método público
-    public function comer() {
+    public function comer()
+    {
         echo "Método público comer() <br>";
     }
     //método privado
-    private function moverse($lugar) {
+    private function moverse($lugar)
+    {
         echo "Método privado moverse() <br>";
     }
 }
