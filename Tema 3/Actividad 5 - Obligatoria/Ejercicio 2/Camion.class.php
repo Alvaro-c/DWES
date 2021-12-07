@@ -5,7 +5,7 @@ class Camion extends Cuatro_ruedas {
     private $longitud; 
 
     public function anadir_remolque($longitud_remolque){
-        // TODO
+        $this->longitud = $this->longitud + $longitud_remolque;
     }
 
     public function getLongitud()
