@@ -31,11 +31,9 @@ echo "El color de 'dos ruedas' es ". $newDosRuedas->getColor(). " y el peso es "
 
 
 $newCamion = new Camion("azul", 10000); // Error si pongo más o menos de dos argumentos ¿?
-$newCamion->setColor("azul");
-$newCamion->setPeso(10000);
 $newCamion->setLongitud(10);
 $newCamion->setNumero_puertas(2);
 $newCamion->anadir_remolque(5);
 $newCamion->anadir_persona(80);
 
-echo "El color del camión es ". $newCamion->getColor(). ", pesa ". $newCamion->getPeso(). " KG, mide ". $newCamion->getLongitud(). " metros y tiene ". $newCamion->getNumero_puertas(). "<br>";
+echo "El color del camión es ". $newCamion->getColor(). ", pesa ". $newCamion->getPeso(). " KG, mide ". $newCamion->getLongitud(). " metros y tiene ". $newCamion->getNumero_puertas(). " puertas<br>";

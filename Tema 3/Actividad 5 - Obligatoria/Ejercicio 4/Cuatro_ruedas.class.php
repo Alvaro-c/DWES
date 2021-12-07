@@ -1,9 +1,10 @@
 <?php
 
-class Cuatro_ruedas extends Vehiculo {
+class Cuatro_ruedas extends Vehiculo
+{
 
     private $numero_puertas;
-    
+
     public function repintar($color) {
         $this->color = $color;
     }
@@ -21,8 +22,15 @@ class Cuatro_ruedas extends Vehiculo {
 
     public function anadir_persona($peso_persona) {
 
-        $this->peso = $this->peso +  $peso_persona;
+        $this->setPeso($this->getPeso() + $peso_persona);
     }
 
-    
+    public function ver_atributo(Vehiculo $objeto) {
+
+        echo "Tipo: Cuatro Ruedas <br>";
+        echo "Color: " . $objeto->getColor() . "<br>
+        Peso " . $objeto->getPeso() . " Kg<br>
+        Número de puertas: " . $objeto->getNumero_puertas() . " <br>";
+
+    }
 }

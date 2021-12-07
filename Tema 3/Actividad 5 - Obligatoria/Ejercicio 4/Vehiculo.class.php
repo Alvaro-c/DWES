@@ -37,8 +37,10 @@ abstract class Vehiculo {
         return $this;
     }
 
-    public static function ver_atributo($objeto){
-
+    public function ver_atributo(Vehiculo $objeto){
+        echo "Tipo: Vehículo <br>";
+        echo "Color: ". $objeto->getColor(). "<br> 
+        Peso " . $objeto->getPeso(). " Kg <br>";
 
     }
 

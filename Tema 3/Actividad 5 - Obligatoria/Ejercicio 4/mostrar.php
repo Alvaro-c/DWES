@@ -6,36 +6,22 @@ include('Dos_ruedas.class.php');
 include('Coche.class.php');
 include('Camion.class.php');
 
-echo "Ejercicio 2<br>";
-$newVehiculo = new Vehiculo("negro", "1500");
+echo "Ejercicio 4<br><br>";
+$newDosRuedas = new Dos_ruedas("rojo", 150);
+$newDosRuedas->anadir_persona(70);
 
-$newVehiculo->circula();
-$newVehiculo->anadir_persona(70);
-echo "El peso del vehículo es ".$newVehiculo->getPeso(). " Kg <br>";
+echo "El peso del Dos Ruedas es de ". $newDosRuedas->getPeso(). " Kg";
 
-echo "<br>Ejercicio 3 <br>";
+$newDosRuedas->setColor("verde");
+$newDosRuedas->setCilindrada(1000);
 
-$newCoche = new Coche("verde", 1400); 
-$newCoche->anadir_persona(2*65);
-echo "El peso del coche es ".$newCoche->getPeso(). " Kg <br>";
+echo "<br><br>Después de las modificaciones: <br><br>";
+echo $newDosRuedas->ver_atributo($newDosRuedas);
 
-$newCoche->anadir_cadenas_nieve(2);
-echo "El Coche es ".$newCoche->getColor(). " y tiene ". $newCoche->getNumero_cadenas_nieve(). " cadenas para la nieve<br>";
+echo "<br><br>Creación del camión: <br><br>";
 
-$newDosRuedas = new Dos_ruedas("negro", 120);
-
-$newDosRuedas->anadir_persona(80);
-$newDosRuedas->poner_gasolina(20);
-
-echo "El color de 'dos ruedas' es ". $newDosRuedas->getColor(). " y el peso es ". $newDosRuedas->getPeso(). " Kg <br>";
-
-
-$newCamion = new Camion("azul", 10000); // Error si pongo más o menos de dos argumentos ¿?
-$newCamion->setColor("azul");
-$newCamion->setPeso(10000);
-$newCamion->setLongitud(10);
+$newCamion = new Camion("blanco", 6000);
+$newCamion->anadir_persona(84);
+$newCamion->repintar("azul");
 $newCamion->setNumero_puertas(2);
-$newCamion->anadir_remolque(5);
-$newCamion->anadir_persona(80);
-
-echo "El color del camión es ". $newCamion->getColor(). ", pesa ". $newCamion->getPeso(). " KG, mide ". $newCamion->getLongitud(). " metros y tiene ". $newCamion->getNumero_puertas(). "<br>";
+echo $newCamion->ver_atributo($newCamion);

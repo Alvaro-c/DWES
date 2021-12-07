@@ -20,4 +20,14 @@ class Coche extends Cuatro_ruedas {
         $this->numero_cadenas_nieve = $numero_cadenas_nieve;
         return $this;
     }
+
+    public function ver_atributo(Vehiculo $objeto){
+        
+        echo "Tipo: Coche <br>";
+        echo "Color: ". $objeto->getColor(). "<br>
+        Peso " . $objeto->getPeso(). " Kg<br>
+        Número de puertas: ". $objeto->getNumero_puertas(). " <br>
+        Nº Cadenas de nieve: " . $objeto->getNumero_cadenas_nieve() . " <br>";
+
+    }
 }

@@ -1,5 +1,7 @@
 <?php
 
+use Dos_ruedas as GlobalDos_ruedas;
+
 class Dos_ruedas extends Vehiculo {
 
     private $cilindrada;
@@ -19,6 +21,16 @@ class Dos_ruedas extends Vehiculo {
 
     public function anadir_persona($peso_persona) {
 
-        $this->peso = $this->peso +  $peso_persona + 2;
+        $this->setPeso($this->getPeso() +  $peso_persona + 2);
+    }
+
+    public function ver_atributo(Vehiculo $objeto){
+
+        //parent::ver_atributo($objeto);
+        echo "Tipo: Dos Ruedas <br>"; 
+        echo "Color: ". $objeto->getColor(). "<br>
+        Peso " . $objeto->getPeso(). " Kg<br>
+        Cilindrada: ". $objeto->getCilindrada(). "cc <br>";
+
     }
 }
