@@ -39,6 +39,8 @@ abstract class Vehiculo {
 
     public static function ver_atributo($objeto){
 
+        // Implementar en el resto de clases, no aquí. En el resto de clases sobreescribirá este método
+        // En cada clase mostrará los atributos propios
 
     }
 
