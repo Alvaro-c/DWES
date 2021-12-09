@@ -1,24 +1,30 @@
 <?php
 
+// Clase Vehiculo (abstracta)
 abstract class Vehiculo {
 
     private $color;
     private $peso;
-    const SALTO_DE_LINEA = "<br />";
-    protected $numero_cambio_color = 0;
+    const SALTO_DE_LINEA = "<br />"; // constante para poner saltos de línea
+    protected $numero_cambio_color = 0; // Contador protegido para llevar la cuenta de las instancias
 
+    // Constructor con sus dos atributos
     public function __construct($color, $peso) {
 
         $this->color = $color;
         $this->peso = $peso;
     }
 
+
+    // Método que muestra un mensaje por pantalla
     public function circula() {
         echo "El vehículo circula<br>";
     }
 
+    // Método que añade el peso de la persona al objeto (se implementa en clases hijo)
     abstract public function anadir_persona($peso_persona);
 
+    //getters y setters
     public function getColor() {
         return $this->color;
     }
@@ -41,6 +47,7 @@ abstract class Vehiculo {
         return $this;
     }
 
+    // Método que sustituye al método original del padre para mostrar todos los atributos del objeto
     public function ver_atributo(Vehiculo $objeto){
         echo "Tipo: Vehículo ". Vehiculo::SALTO_DE_LINEA;
         echo "Color: ". $objeto->getColor() . Vehiculo::SALTO_DE_LINEA . "

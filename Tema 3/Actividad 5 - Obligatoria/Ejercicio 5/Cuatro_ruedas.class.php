@@ -1,19 +1,23 @@
 <?php
 
+// Clase Cuatro_ruedas
 class Cuatro_ruedas extends Vehiculo
 {
 
     private $numero_puertas;
 
+    // Constructor de este objeto que hereda del padre
     public function __construct($color, $peso, $numero_puertas) {
         parent::__construct($color, $peso);
         $this->setNumero_puertas($numero_puertas);
     }
 
+    // método que cambia el color del objeto
     public function repintar($color) {
         $this->color = $color;
     }
 
+    // getters y setters
     public function getNumero_puertas() {
         return $this->numero_puertas;
     }
@@ -25,11 +29,13 @@ class Cuatro_ruedas extends Vehiculo
 
     }
 
+    // Método que añade el peso de una persona al peso que ya tiene el objeto
     public function anadir_persona($peso_persona) {
 
         $this->setPeso($this->getPeso() + $peso_persona);
     }
 
+    // Método que sustituye al método original del padre para mostrar todos los atributos del objeto
     public function ver_atributo(Vehiculo $objeto) {
 
         echo "Tipo: Cuatro Ruedas <br>";

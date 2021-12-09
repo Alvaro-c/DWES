@@ -1,10 +1,12 @@
 <?php
 
+// Clase Coche
 class Coche extends Cuatro_ruedas
 {
 
     private $numero_cadenas_nieve;
 
+    // modificación del método para que en caso de que el peso sea mayor de 2100 se muestre un error
     public function setPeso($peso) {
 
         if ($peso > 2100) {
@@ -15,10 +17,12 @@ class Coche extends Cuatro_ruedas
 
     }
 
+    // añade las cadenas pasadas por parámetro a las que ya haya
     public function anadir_cadenas_nieve($num) {
         $this->numero_cadenas_nieve = $this->numero_cadenas_nieve + $num;
     }
 
+    // Si hay cadenas suficientes, quitará las pasadas por parámetro, sino muestra un error
     public function quitar_cadenas_nieve($num) {
         if ($this->getNumero_cadenas_nieve() >= $num) {
             $this->setNumero_cadenas_nieve($this->getNumero_cadenas_nieve() - $num);
@@ -28,6 +32,7 @@ class Coche extends Cuatro_ruedas
         }
     }
 
+    // getters y setters
     public function getNumero_cadenas_nieve() {
         return $this->numero_cadenas_nieve;
     }
@@ -37,6 +42,7 @@ class Coche extends Cuatro_ruedas
         return $this;
     }
 
+    // Método que sustituye al método original del padre para mostrar todos los atributos del objeto
     public function ver_atributo(Vehiculo $objeto) {
 
         echo "Tipo: Coche <br>";
@@ -47,6 +53,7 @@ class Coche extends Cuatro_ruedas
 
     }
 
+    // Método que añade el peso de una persona y muestra una advertencia si hay menos de 2 cadenas
     public function anadir_persona($peso_persona) {
         parent::anadir_persona($peso_persona);
 
