@@ -35,7 +35,7 @@ if ($_POST['usuario'] == "" || !ctype_alnum($_POST['usuario'])) {
     $_SESSION['userError'] = true;
     $_SESSION['passError'] = false;
     $_SESSION['userDupe'] = false;
-    header("Location: index.php");
+    header("Location: guardar_usuarios.php");
 
     // comprobar si la pass está escrita y no tiene caracteres raros
 } else if ($_POST['password'] == "" || !ctype_alnum($_POST['password'])) {
@@ -43,7 +43,7 @@ if ($_POST['usuario'] == "" || !ctype_alnum($_POST['usuario'])) {
     $_SESSION['userError'] = false;
     $_SESSION['passError'] = true;
     $_SESSION['userDupe'] = false;
-    header("Location: index.php");
+    header("Location: guardar_usuarios.php");
 
     //comprobar si el usuario ya existe
 } else if (compruebaUser($_POST['usuario'])) {
@@ -51,7 +51,7 @@ if ($_POST['usuario'] == "" || !ctype_alnum($_POST['usuario'])) {
     $_SESSION['userError'] = false;
     $_SESSION['passError'] = false;
     $_SESSION['userDupe'] = true;
-    header("Location: index.php");
+    header("Location: guardar_usuarios.php");
 
     // caso correcto
 } else {
@@ -64,5 +64,5 @@ if ($_POST['usuario'] == "" || !ctype_alnum($_POST['usuario'])) {
     $archivo = file_put_contents("acceso.txt", "\n$usuario $password $rol", FILE_APPEND);
     
     echo "Usuario guardado<br>";
-    echo '<a href="index.php"> Volver a inicio</a>';
+    echo '<a href="guardar_usuarios.php"> Volver a inicio</a>';
 }

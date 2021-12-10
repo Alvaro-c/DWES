@@ -7,7 +7,7 @@ if (isset($_SESSION['surname']) && $_SESSION['surname'] != "" ) {
 
     echo "Los apellidos son " . $_SESSION['surname'];
 
-    echo '<p><a href="index.php"> Volver a inicio</a></p>';
+    echo '<p><a href="guardar_usuarios.php"> Volver a inicio</a></p>';
 
 } else {
 
@@ -29,7 +29,7 @@ if (isset($_SESSION['surname']) && $_SESSION['surname'] != "" ) {
 
 <?php
 
-echo '<p><a href="index.php"> Volver a inicio</a></p>';
+echo '<p><a href="guardar_usuarios.php"> Volver a inicio</a></p>';
 
 }
 

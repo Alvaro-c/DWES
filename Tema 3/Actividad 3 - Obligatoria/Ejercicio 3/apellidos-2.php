@@ -6,7 +6,7 @@ session_start();
 if(isset($_POST['surname']) && $_POST['surname'] != "") {
 
     $_SESSION['surname'] = $_POST['surname'];
-    header('Location: index.php');
+    header('Location: guardar_usuarios.php');
 
 } else {
     

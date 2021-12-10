@@ -7,10 +7,11 @@ function comprobar_usuario($nombre, $clave)
     $fichero = fopen("acceso.txt", "r");
     while (!feof($fichero)) {
 
-        $usuario = fscanf($fichero, "%s %s %d");
+        $usuario = fscanf($fichero, "%s %s %d %s");
+        $claveHash = crypt($clave, $usuario[3]);
 
         // comprobación del usuario y la contraseña
-        if ($usuario[0] == $nombre && $usuario[1] == $clave) {
+        if ($usuario[0] == $nombre && $usuario[1] == $claveHash) {
 
             $usu['nombre'] = $nombre;
             $usu['rol'] = $usuario[2];

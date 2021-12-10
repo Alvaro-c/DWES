@@ -1,0 +1,8 @@
+Modificar el ejercicio registro.php para que la contraseña introducida por 
+el usuario quede hasheada con SHA512
+usando un salt aleatorio de 20 caracteres. 
+Se ha de modificar el archiv acceso.txt para guardar el salt aleatorio generado 
+a cada usuario en el proceso de registro
+La estructura del fichero acceso.txt será: "usuario clave_hasheada rol salt"
+Modificar el ejercicio login.php para que la contraseña introducida por el 
+usuario sea validada en el archivo acceso.txt
