@@ -3,12 +3,10 @@
 namespace Foo\Bar\subespacio_de_nombres;
 
 const FOO = 1;
-function foo()
-{
+function foo() {
 }
-class foo
-{
-    static function método_estático()
-    {
+
+class foo {
+    static function método_estático() {
     }
 }
