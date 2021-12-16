@@ -45,6 +45,11 @@ if ($_SESSION['rol'] == "1") {
 
 	?>
 
+
+		<h3>Cambiar Rol: </h3>
+		<form action="editar.php" method="post">
+			<label for="cod">Codigo Usuario: </label><input type="text" id="cod" name="cod"><input type="submit">
+		</form>
 		<h2>Información de usuarios</h2>
 		<table>
 			<tr>
@@ -52,6 +57,8 @@ if ($_SESSION['rol'] == "1") {
 				<th>Clave</th>
 				<th>Rol</th>
 			</tr>
+
+
 
 			<?php
 			// imprimir en una tabla la info de los usuarios desde el array que tiene la consulta

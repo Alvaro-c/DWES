@@ -14,7 +14,7 @@ function comprobar_usuario($nombre, $clave) {
 	// Recuperación de todos los usuarios
 	try {
 		$bd = new PDO($cadena_conexion, $usuario, $pass);
-		$sql = "SELECT nombre, clave, rol FROM usuarios WHERE nombre = '". $nombre."'";
+		$sql = 'SELECT nombre, clave, rol FROM usuarios';
 		$usuarios = $bd->query($sql);
 		$array = $usuarios->fetchAll();
 	} catch (PDOException $e) {
@@ -22,7 +22,6 @@ function comprobar_usuario($nombre, $clave) {
 	}
 
 	// Recorrido de los usuarios para ver si alguno coincide con el nombre y clave introducidos
-	// Refactorizado arriba para que la where clause sólo me devuelva un resultado, dejo el código como legacy para obtener el rol
 	for ($i = 0; $i < count($array); $i++) {
 
 		if ($nombre == $array[$i]['nombre'] && $clave == $array[$i]['clave']) {
@@ -46,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	} else {
 		session_start();
 		$_SESSION['usuario'] = $_POST['usuario'];
+		$_SESSION['rol'] = $usu['rol'];
 		header("Location: sesiones1_principal.php");
 	}
 }
