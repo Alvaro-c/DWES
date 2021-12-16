@@ -4,8 +4,7 @@
 
 
 
-function comprobar_usuario($nombre, $clave)
-{
+function comprobar_usuario($nombre, $clave) {
 
 
 	$cadena_conexion = 'mysql:dbname=empresa;host=127.0.0.1';
@@ -23,19 +22,17 @@ function comprobar_usuario($nombre, $clave)
 	}
 
 
-	for($i = 0; $i < count($array); $i++) {
+	for ($i = 0; $i < count($array); $i++) {
 
 		if ($nombre == $array[$i]['nombre'] && $clave == $array[$i]['clave']) {
-			
+
 			$usu['nombre'] = $nombre;
 			$usu['rol'] = $array[$i]['rol'];
 			return $usu;
 		}
-		
 	}
 
 	return false;
-
 }
 
 
