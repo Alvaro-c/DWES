@@ -45,6 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	} else {
 		session_start();
 		$_SESSION['usuario'] = $_POST['usuario'];
+		$_SESSION['rol'] = $usu['rol'];
 		header("Location: sesiones1_principal.php");
 	}
 }

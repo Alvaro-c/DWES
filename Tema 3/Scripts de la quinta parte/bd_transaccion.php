@@ -22,5 +22,7 @@ try {
 		$bd->commit();
 	}	
 } catch (PDOException $e) {
-    echo 'Error al conectar: ' . $e->getMessage();
+    
+	echo 'Error al conectar: ' . $e->getMessage();
+
 } 

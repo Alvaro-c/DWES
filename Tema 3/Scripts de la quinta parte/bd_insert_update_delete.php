@@ -15,7 +15,7 @@ try {
 		echo "insert correcto <br>";
 		echo "Filas insertadas: " . $resul->rowCount() . "<br>";
 	}else print_r( $bd -> errorinfo());	
-	// para los autoincrementos
+	// para los autoincrementos, devuelve el ID de la última fila insertada, es un metodo de la BD, no de la consulta
 	echo "Código de la fila insertada" . $bd->lastInsertId() . "<br>"; 
 	// actualizar
 	$upd = "update usuarios set rol =  0 where rol = 1";
