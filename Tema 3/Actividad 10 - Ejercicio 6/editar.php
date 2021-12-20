@@ -9,6 +9,12 @@ $pass = '';
 $bd = new PDO($cadena_conexion, $usuario, $pass);
 $array = array();
 
+if(!isset($_POST['cod']) && !isset($_POST['submit'])) {
+
+    header('Location: sesiones1_login.php');
+
+}
+
 if (isset($_POST['cod'])) {
 
     $cod = $_POST['cod'];

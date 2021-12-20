@@ -16,7 +16,7 @@ if ($_SESSION['rol'] == "1") {
 		$pass = '';
 
 		$bd = new PDO($cadena_conexion, $usuario, $pass);
-		$sql = 'SELECT nombre, clave, rol FROM usuarios';
+		$sql = 'SELECT codigo, nombre, clave, rol FROM usuarios';
 		$usuarios = $bd->query($sql);
 		$array = $usuarios->fetchAll();
 	} catch (PDOException $e) {
@@ -53,6 +53,7 @@ if ($_SESSION['rol'] == "1") {
 		<h2>Información de usuarios</h2>
 		<table>
 			<tr>
+				<th>Código</th>
 				<th>Nombre</th>
 				<th>Clave</th>
 				<th>Rol</th>
@@ -69,6 +70,7 @@ if ($_SESSION['rol'] == "1") {
 					<td><?php echo $array[$i][0] ?></td>
 					<td><?php echo $array[$i][1] ?></td>
 					<td><?php echo $array[$i][2] ?></td>
+					<td><?php echo $array[$i][3] ?></td>
 				</tr>
 
 		<?php
