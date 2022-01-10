@@ -14,6 +14,10 @@
 		<?php 
 		require 'cabecera.php';
 		$cat = cargar_categoria($_GET['categoria']);
+
+		// guardar la catergoría en SESSION
+		$_SESSION['categoria'] = $_GET['categoria'];
+		
 		$productos = cargar_productos_categoria($_GET['categoria']);		
 		if($cat=== FALSE or $productos === FALSE){
 			echo "<p class='error'>Error al conectar con la base datos</p>";
