@@ -19,11 +19,34 @@ function leer_config($nombre, $esquema) {
     return $resul;
 }
 
+function actualizar_restaurante($datos) {
+
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+
+    $preparada = $bd->prepare("UPDATE restaurantes SET 
+    Correo = :correo, 
+    Clave = :clave, 
+    Pais = :pais, 
+    Cp = :cp, 
+    Ciudad = :ciudad, 
+    Direccion = :direccion, 
+    Rol = :rol 
+    WHERE CodRes = :codres;");
+
+
+    $resul = $preparada->execute($datos);
+
+    return $resul;
+}
+
 function comprobar_usuario($nombre, $clave) {
     // dirname rescata la ruta donde está situado el script
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
-    $ins = "select codRes, correo from restaurantes where correo = '$nombre' 
+    //Ejercicio 2: 
+    // recoger el Rol de la BBDD
+    $ins = "select codRes, correo, rol from restaurantes where correo = '$nombre' 
 			and clave = '$clave'";
     $resul = $bd->query($ins);
     if ($resul->rowCount() === 1) {
@@ -98,6 +121,23 @@ function cargar_productos($codigosProductos) {
         return $resul;
     }
 }
+
+function cargar_restaurantes() {
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) .
+        "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $ins = "select * from restaurantes";
+    $resul = $bd->query($ins);
+    if (!$resul) {
+        return FALSE;
+    }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
+    //si hay 1 o más
+    return $resul;
+}
+
 
 function insertar_pedido($carrito, $codRes) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");

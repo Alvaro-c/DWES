@@ -12,6 +12,7 @@ if(isset($_SESSION['carrito'][$cod])){
 }
 $cat = $_SESSION['categoria'];
 
+// Ejercicio 1:
 header("Location: productos.php?categoria=$cat");
 
 //header("Location: carrito.php");

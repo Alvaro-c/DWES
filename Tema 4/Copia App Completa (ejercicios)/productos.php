@@ -15,6 +15,7 @@
 		require 'cabecera.php';
 		$cat = cargar_categoria($_GET['categoria']);
 
+		// Ejercicio 1:
 		// guardar la catergoría en SESSION
 		$_SESSION['categoria'] = $_GET['categoria'];
 		
