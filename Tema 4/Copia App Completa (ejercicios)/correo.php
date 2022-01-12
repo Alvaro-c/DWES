@@ -15,28 +15,35 @@ function crear_correo($carrito, $pedido, $correo){
 	$productos = cargar_productos(array_keys($carrito));	
 	$texto .= "<table>"; //abrir la tabla
 	$texto .= "<tr><th>Nombre</th><th>Descripción</th><th>Peso</th><th>Unidades</th></tr>";
+	// Ejercicio 6
+	$pesoTotal = 0;
 	foreach($productos as $producto){
+		
 		$cod = $producto['CodProd'];
 		$nom = $producto['Nombre'];
 		$des = $producto['Descripcion'];
 		$peso = $producto['Peso'];
-		$unidades = $_SESSION['carrito'][$cod];									    
+		$unidades = $_SESSION['carrito'][$cod];	
+		// Ejercicio 6
+		$pesoTotal = $pesoTotal + ($peso * $unidades);								    
 		$texto .= "<tr><td>$nom</td><td>$des</td><td>$peso</td><td>$unidades</td>
 		<td> </tr>";
 	}
-	$texto .= "</table>";	
+	// Ejercicio 6
+	$texto .= "</table>". "<p> Peso total del pedido: ". $pesoTotal."</p>";	
 	return $texto;
 }
 function enviar_correo_multiples($lista_correos,  $cuerpo,  $asunto = ""){
 		$mail = new PHPMailer();		
-		$mail->IsSMTP(); 					
+		$mail->IsSMTP(); 		
+		$datosServidor = leer_servidor_correo('servidor_correo.xml', 'servidor_correo_xsd');			
 		$mail->SMTPDebug  = 0;  // cambiar a 1 o 2 para ver errores
-		$mail->SMTPAuth   = true;                  
-		$mail->SMTPSecure = "tls";                 
-		$mail->Host       = "smtp.gmail.com";      
-		$mail->Port       = 587;                   
-		$mail->Username   = "";  //usuario de gmail
-		$mail->Password   = ""; //contraseña de gmail          
+		$mail->SMTPAuth   = $datosServidor[0];                  
+		$mail->SMTPSecure = $datosServidor[1];                 
+		$mail->Host       = $datosServidor[2];      
+		$mail->Port       = $datosServidor[3];                   
+		$mail->Username   = $datosServidor[4];  //usuario de gmail
+		$mail->Password   = $datosServidor[5]; //contraseña de gmail          
 		$mail->SetFrom('noreply@empresafalsa.com', 'Sistema de pedidos');
 		$mail->Subject    = $asunto;
 		$mail->MsgHTML($cuerpo);

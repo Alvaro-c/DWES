@@ -3,6 +3,7 @@
 require 'sesiones.php';
 require_once 'bd.php';
 comprobar_sesion();
+comprobar_admin();
 ?>
 <!DOCTYPE html>
 <html>

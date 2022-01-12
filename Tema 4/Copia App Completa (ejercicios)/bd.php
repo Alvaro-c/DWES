@@ -19,6 +19,37 @@ function leer_config($nombre, $esquema) {
     return $resul;
 }
 
+// Ejercicio 7 
+function leer_servidor_correo($nombre, $esquema){
+
+    $config = new DOMDocument();
+    $config->load($nombre);
+    $res = $config->schemaValidate($esquema);
+    if ($res === FALSE) {
+        throw new InvalidArgumentException("Revise fichero de configuración");
+    }
+    $datos = simplexml_load_file($nombre);
+    $SMTPAuth = $datos->xpath("//SMTPAuth");
+    $SMTPSecure = $datos->xpath("//SMTPSecure");
+    $Host = $datos->xpath("//Host");
+    $Port = $datos->xpath("//Port");
+    $Username = $datos->xpath("//Username");
+    $Password = $datos->xpath("//Password");
+
+    // Monto array con la config
+    $resul = [];
+    $resul[] = $SMTPAuth[0];
+    $resul[] = $SMTPSecure[0];
+    $resul[] = $Host[0];
+    $resul[] = $Port[0];
+    $resul[] = $Username[0];
+    $resul[] = $Password[0];
+    return $resul;
+
+}
+
+// Ejercicio 3
+// Ejercicio 4
 function actualizar_restaurante($datos) {
 
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
@@ -33,9 +64,10 @@ function actualizar_restaurante($datos) {
     Direccion = :direccion, 
     Rol = :rol 
     WHERE CodRes = :codres;");
-
-
-    $resul = $preparada->execute($datos);
+    // Ejercicio 4
+    $datos[':clave'] = password_hash($datos[':clave'], PASSWORD_BCRYPT);
+    // Ejercicio 3
+    $resul = $preparada->execute($datos); // El array $datos debe tener el mismo número de claves que los parametros a sustituir en la consulta
 
     return $resul;
 }
@@ -44,13 +76,28 @@ function comprobar_usuario($nombre, $clave) {
     // dirname rescata la ruta donde está situado el script
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
-    //Ejercicio 2: 
+    // Ejercicio 2: 
     // recoger el Rol de la BBDD
-    $ins = "select codRes, correo, rol from restaurantes where correo = '$nombre' 
-			and clave = '$clave'";
-    $resul = $bd->query($ins);
-    if ($resul->rowCount() === 1) {
-        return $resul->fetch();
+    // Ejercicio 4
+    // Ejercicio 5
+    // Ejercicio 9
+    // Opción 1: por posición
+    $datos[] = $nombre;
+    $preparada = $bd->prepare("select codRes, correo, rol, clave from restaurantes where correo = ?");
+    // Opción 2: por nombre
+    // $datos[':nombre'] = $nombre;
+    // $preparada = $bd->prepare("select codRes, correo, rol, clave from restaurantes where correo = :nombre");
+    
+    $preparada->execute($datos);
+
+    if ($preparada->rowCount() === 1) {
+
+        $datos = $preparada->fetch();
+        if (password_verify($clave, $datos['clave'])) {
+
+            return $datos;
+        }
+        return false;
     } else {
         return FALSE;
     }
@@ -91,6 +138,7 @@ function cargar_categoria($codCat) {
 function cargar_productos_categoria($codCat) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
+    // Ejercicio 5
     $sql = "select * from productos where Codcat  = $codCat and stock > 0";
     $resul = $bd->query($sql);
     if (!$resul) {

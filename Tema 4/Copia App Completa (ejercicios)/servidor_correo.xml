@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<servidor>
+    <SMTPAuth>true</SMTPAuth>
+    <SMTPSecure>tls</SMTPSecure>
+    <Host>smtp.gmal.com</Host>
+    <Port>587</Port>    
+    <Username></Username>
+    <Password></Password>
+</servidor>

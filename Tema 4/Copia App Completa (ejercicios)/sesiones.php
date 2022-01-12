@@ -6,3 +6,10 @@ function comprobar_sesion(){
 	}		
 }
 
+function comprobar_admin() {
+
+	if($_SESSION['usuario']['rol'] != 1) {
+		header("Location: categorias.php");
+	}
+
+}
