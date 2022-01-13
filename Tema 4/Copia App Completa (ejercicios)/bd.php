@@ -20,7 +20,7 @@ function leer_config($nombre, $esquema) {
 }
 
 // Ejercicio 7 
-function leer_servidor_correo($nombre, $esquema){
+function leer_servidor_correo($nombre, $esquema) {
 
     $config = new DOMDocument();
     $config->load($nombre);
@@ -45,7 +45,6 @@ function leer_servidor_correo($nombre, $esquema){
     $resul[] = $Username[0];
     $resul[] = $Password[0];
     return $resul;
-
 }
 
 // Ejercicio 3
@@ -56,8 +55,7 @@ function actualizar_restaurante($datos) {
     $bd = new PDO($res[0], $res[1], $res[2]);
 
     $preparada = $bd->prepare("UPDATE restaurantes SET 
-    Correo = :correo, 
-    Clave = :clave, 
+    Correo = :correo,  
     Pais = :pais, 
     Cp = :cp, 
     Ciudad = :ciudad, 
@@ -65,8 +63,24 @@ function actualizar_restaurante($datos) {
     Rol = :rol 
     WHERE CodRes = :codres;");
     // Ejercicio 4
-    $datos[':clave'] = password_hash($datos[':clave'], PASSWORD_BCRYPT);
+    // Ejercicio 10: $datos[':clave'] = password_hash($datos[':clave'], PASSWORD_BCRYPT);
     // Ejercicio 3
+    $resul = $preparada->execute($datos); // El array $datos debe tener el mismo número de claves que los parametros a sustituir en la consulta
+
+    return $resul;
+}
+
+// Ejercicio 10
+function actualizar_clave($datos) {
+
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+
+    $preparada = $bd->prepare("UPDATE restaurantes SET 
+    Correo = :correo,  
+    Clave = :clave
+    WHERE CodRes = :codres;");
+    $datos[':clave'] = password_hash($datos[':clave'], PASSWORD_BCRYPT);
     $resul = $preparada->execute($datos); // El array $datos debe tener el mismo número de claves que los parametros a sustituir en la consulta
 
     return $resul;
@@ -87,7 +101,7 @@ function comprobar_usuario($nombre, $clave) {
     // Opción 2: por nombre
     // $datos[':nombre'] = $nombre;
     // $preparada = $bd->prepare("select codRes, correo, rol, clave from restaurantes where correo = :nombre");
-    
+
     $preparada->execute($datos);
 
     if ($preparada->rowCount() === 1) {
@@ -139,7 +153,16 @@ function cargar_productos_categoria($codCat) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
     // Ejercicio 5
-    $sql = "select * from productos where Codcat  = $codCat and stock > 0";
+    // $sql = "select * from productos where Codcat  = $codCat and stock > 0";
+
+    // Ejercicio 11
+    if (isset($_COOKIE['sin_stock'])) {
+        $sql = "select * from productos where Codcat  = $codCat";
+    } else {
+        $sql = "select * from productos where Codcat  = $codCat and stock > 0";
+    }
+
+
     $resul = $bd->query($sql);
     if (!$resul) {
         return FALSE;
@@ -214,4 +237,32 @@ function insertar_pedido($carrito, $codRes) {
 
     $bd->commit();
     return $pedido;
+}
+
+// Ejercicio 11 c)
+function arrayToString($array) {
+
+    $string = "";
+    foreach ($array as $clave => $valor) {
+
+        $string = $string . $clave . ":" . $valor . ";";
+    }
+    return $string;
+}
+
+function stringToArray($string) {
+    // AQUI ES DONDE ES UN JALEO
+    $finalArray = array();
+    $array = explode(";", $string);
+    unset($array[count($array) - 1]);
+
+    foreach ($array as $nameAndEmail) {
+
+        $arrayNameAndEmail = explode(":", $nameAndEmail);
+        $name = $arrayNameAndEmail[0];
+        $email = $arrayNameAndEmail[1];
+
+        $finalArray[$name] = $email;
+    }
+    return $finalArray;
 }

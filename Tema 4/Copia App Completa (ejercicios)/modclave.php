@@ -25,7 +25,7 @@ comprobar_admin();
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-		$actualizado = actualizar_restaurante($_POST);
+		$actualizado = actualizar_clave($_POST);
 
 		if ($actualizado) {
 			echo "<p>Datos actualizados correctamente</p>";
@@ -42,23 +42,15 @@ comprobar_admin();
 	}
 
 	echo "<table>"; //abrir la tabla
-	echo "<tr><th>Correo</th><th>País</th><th>CP</th><th>Ciudad</th><th>Dirección</th><th>Rol</th></tr>";
+	echo "<tr><th>Correo</th><th>Clave</th></tr>";
 	foreach ($restaurantes as $restaurante) {
 		$correo = $restaurante['Correo'];
-		$pais = $restaurante['Pais'];
-		$cp = $restaurante['CP'];
-		$ciudad = $restaurante['Ciudad'];
-		$direccion = $restaurante['Direccion'];
-		$rol = $restaurante['Rol'];
+		$clave = $restaurante['Clave'];
 		$codres = $restaurante['CodRes'];
 		echo "<tr>
-            <form action = 'datos_usu.php' method = 'POST'>
+            <form action = 'modclave.php' method = 'POST'>
             <td><input name = ':correo' value = '$correo'></td>
-            <td><input name = ':pais' value = '$pais'></td>
-            <td><input name = ':cp' value = '$cp'></td>
-            <td><input name = ':ciudad' value = '$ciudad'></td>
-            <td><input name = ':direccion' value = '$direccion'></td>
-            <td><input name = ':rol' value = '$rol'></td>
+            <td><input name = ':clave' value = '$clave'></td>
             <input name = ':codres'  type='hidden'  value = '$codres'>
             <td><input type = 'submit' value='Modificar'></td>
 			</form>

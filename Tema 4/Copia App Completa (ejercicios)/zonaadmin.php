@@ -20,6 +20,7 @@ comprobar_admin();
 		productos.php?categoria=1-->
     <ul>
         <li><a href='datos_usu.php'>Datos de los restaurantes</a></li>
+        <li><a href='modclave.php'>Modificación de claves</a></li>
     </ul>
 
     <?php

@@ -14,10 +14,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		// $usu tiene campos correo y codRes, correo 
 		$_SESSION['usuario'] = $usu;
 		$_SESSION['carrito'] = [];
-		header("Location: categorias.php");
+
+		// Ejercicio 11 a)
+		if (isset($_COOKIE['pagina_inicio'])) {
+			header("Location: carrito.php");
+		} else {
+
+			header("Location: categorias.php");
+		}
 		return;
 	}	
 }
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html>

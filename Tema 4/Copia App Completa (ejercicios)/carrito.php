@@ -20,6 +20,11 @@
 			echo "<p>No hay productos en el pedido</p>";
 			exit;
 		}
+
+		$stringCarrito = $_SESSION['carrito'];
+		$stringCarrito = arrayToString($stringCarrito);
+		setcookie('cookieCarrito', $stringCarrito, time() + 3600 * 24);
+
 		echo "<h2>Carrito de la compra</h2>";
 		echo "<table>"; //abrir la tabla
 		echo "<tr><th>Nombre</th><th>Descripción</th><th>Peso</th><th>Unidades</th><th>Eliminar</th></tr>";
