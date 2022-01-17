@@ -168,6 +168,31 @@ function cargar_restaurantes() {
     return $resul;
 }
 
+function cargar_sin_stock($faltan) {
+
+    $productos = cargar_productos(array_keys($faltan));
+
+    echo "<h2>Faltan los siguientes productos</h2>";
+    echo "<table>"; //abrir la tabla
+    echo "<tr><th>Ud pedidas</th><th>Ud que faltan</th><th>Nombre</th><th>Descripción</th><th>Categoría</th></tr>";
+    foreach ($productos as $producto) {
+        $cod = $producto['CodProd'];
+        $nom = $producto['Nombre'];
+        $des = $producto['Descripcion'];
+        $categoria = get_categoria($producto['CodCat']);
+        $udPedidas = $_SESSION['carrito'][$cod];
+        $udFaltan = $faltan[$cod];
+        $unidadesDispo = $producto['Stock'];
+
+        echo "<tr><td>$udPedidas</td><td>$udFaltan</td><td>$nom</td><td>$des</td><td>$categoria</td>";
+    };
+
+    echo "</tr></table>";
+    echo "<form action='procesar_pedido.php' method='post'><input type='submit' class='boton'  name='tramitar' value='Tramitar pedido'></form>";
+
+
+}
+
 function comprobar_usuario($nombre, $clave) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
@@ -294,14 +319,14 @@ function get_categoria($codigo){
 
 }
 
-function insertar_pedido($carrito, $codRes) {
+function insertar_pedido($carrito, $codRes, $enviado = 0) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
     $bd->beginTransaction();
     $hora = date("Y-m-d H:i:s", time());
     // insertar el pedido
     $sql = "INSERT INTO pedidos(Fecha, Enviado, Restaurante) 
-			VALUES('$hora',0, $codRes)";
+			VALUES('$hora', $enviado, $codRes)";
     $resul = $bd->query($sql);
     if (!$resul) {
         return FALSE;
@@ -320,6 +345,28 @@ function insertar_pedido($carrito, $codRes) {
     }
     $bd->commit();
     return $pedido;
+}
+
+// esta función añade los productos sin stock de un pedido a la tabla correspondiente.
+// Recibe un array similar al carrito, pero sólo de productos que no tienen stock y también recibe el número del último pedido
+function insertar_sin_stock($envio_pendiente, $pedido) {
+
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $bd->beginTransaction();
+
+    foreach ($envio_pendiente as $codProd => $unidades) {
+        $sql = "INSERT INTO productospendientes(CodPed, CodProd, UdPend) 
+		             VALUES( $pedido, $codProd, $unidades)";
+        $resul = $bd->query($sql);
+        if (!$resul) {
+            $bd->rollback();
+            return FALSE;
+        }
+    }
+
+    $bd->commit();
+
 }
 
 
