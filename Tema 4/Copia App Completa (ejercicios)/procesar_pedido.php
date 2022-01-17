@@ -28,6 +28,7 @@
 		};*/		
 		//vaciar carrito	
 		$_SESSION['carrito'] = [];
+		setcookie('carrito', json_encode($_SESSION['carrito']) , time() - 3600 * 24);
 
 		}		
 	?>		

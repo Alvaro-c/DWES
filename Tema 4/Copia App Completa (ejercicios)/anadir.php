@@ -12,6 +12,10 @@ if(isset($_SESSION['carrito'][$cod])){
 }
 $cat = $_SESSION['categoria'];
 
+// comprobar si el user quiere guardar el carrito (preferencias del user)
+if (isset($_COOKIE['carrito'])){
+	setcookie('carrito', json_encode($_SESSION['carrito']) , time() + 3600 * 24);
+}
 // Ejercicio 1:
 header("Location: productos.php?categoria=$cat");
 

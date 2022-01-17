@@ -7,7 +7,7 @@
 		// Cookie página de incio
 		if (isset($_POST['pagina_inicio'])){
 			setcookie('pagina_inicio', $_POST['pagina_inicio'], time() + 3600 * 24);
-			$_COOKIE['pagina_inicio']=$_POST['pagina_inicio']; // Esta linea hace que la opción quede marcada cuando se guarda el form
+			$_COOKIE['pagina_inicio']=$_POST['pagina_inicio'];
 		} else {
 			setcookie('pagina_inicio','', time() - 3600 * 24);
 			$_COOKIE['pagina_inicio'] = Null;

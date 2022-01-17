@@ -13,7 +13,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		session_start();
 		// $usu tiene campos correo y codRes, correo 
 		$_SESSION['usuario'] = $usu;
-		$_SESSION['carrito'] = [];
+		// $_SESSION['carrito'] = [];
+		$_SESSION['carrito'] = (array) json_decode(leer_cookie(('carrito')));
 
 		// Ejercicio 11 a)
 		if (isset($_COOKIE['pagina_inicio'])) {

@@ -10,6 +10,9 @@ if(isset($_SESSION['carrito'][$cod])){
 	if($_SESSION['carrito'][$cod] <= 0){
 		unset($_SESSION['carrito'][$cod]);
 	}
-	
+	// comprobar si el user quiere guardar el carrito (preferencias del user)
+	if (isset($_COOKIE['carrito'])){
+		setcookie('carrito', json_encode($_SESSION['carrito']) , time() + 3600 * 24);
+	}
 }
 header("Location: carrito.php");
