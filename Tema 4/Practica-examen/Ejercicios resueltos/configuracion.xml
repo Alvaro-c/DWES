@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuracion>
+	<ip>127.0.0.1</ip>
+    <nombre>pedidos</nombre>
+    <usuario>root</usuario>
+    <clave></clave>    
+</configuracion>
+    <!-- "Nombre" guarda el nombre de la base de datos a la que nos vamos a conectar -->
+    <!-- "Usuario" guarda el usuario de phpmyadmin -->
+    <!-- "Clave" guarda la clave del usuario de phpmyadmin -->
