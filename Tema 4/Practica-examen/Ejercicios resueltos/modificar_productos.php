@@ -10,6 +10,7 @@ comprobar_sesion();
 <head>
     <meta charset="UTF-8">
     <title>Modificar productos</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

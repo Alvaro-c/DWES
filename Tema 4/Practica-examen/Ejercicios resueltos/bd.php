@@ -45,7 +45,7 @@ function leer_cookie($nombre_cookie, $valor_por_defecto = FALSE) {
     }
 }
 
-function bdAux(){
+function bdAux() {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
     return $bd;
@@ -151,9 +151,9 @@ function cargar_categorias() {
     if (!$resul) {
         return FALSE;
     }
-   if ($resul->rowCount() === 0) {
-       return FALSE;
-   }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
     //si hay 1 o más
     return $resul->fetchALL(PDO::FETCH_ASSOC);
 }
@@ -166,9 +166,9 @@ function cargar_categoria($codCat) {
     if (!$resul) {
         return FALSE;
     }
-   if ($resul->rowCount() === 0) {
-       return FALSE;
-   }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
     //si hay 1 o más
     return $resul->fetch();
 }
@@ -330,6 +330,16 @@ function eliminar_restaurante($datos) {
         }
         return False; // En caso de que el dichero no se haya abierto bien
     }
+}
+
+function eliminar_categorias($codCat) {
+    //todo
+
+}
+
+function eliminar_productos($codProd) {
+    //todo
+
 }
 
 // Ejercicio 2:

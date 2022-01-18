@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Modificar'])) {
 <head>
     <meta charset = "UTF-8">
     <title>Modificar categorías</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <?php require 'cabecera.php';?>
