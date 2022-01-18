@@ -6,13 +6,23 @@ comprobar_sesion();
 comprobar_gestion();
 
 // Se comprueba si hay datos en el post y si los hay se intenta actualizar la categoría correspondiente
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// Compruebo si el POST viene de modificar o de agregar una categoría
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['Modificar'])) {
     $actualizado = actualizar_categoria($_POST);
     if ($actualizado === TRUE) {
         echo "<p>Datos actualizados correctamente</p>";
     } else {
         echo "<p>Error al actualizar los datos</p>";
     }
+} elseif ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST[':agregar'])) {
+
+    $actualizado = alta_categoria($_POST);
+    if ($actualizado === TRUE) {
+        echo "<p>Categoría añadida</p>";
+    } else {
+        echo "<p>Error al añadir la categoría</p>";
+    }
+
 }
 
 ?>
@@ -48,10 +58,23 @@ if($categorias===false){
             <td><input name = ':descripcion' value = '$descripcion'></td>
             <td><a href='$url'>".$categoria['Nombre']."</a></td>
             <input name = ':CodCat'  type='hidden'  value = '$CodCat'>
-            <td><input type = 'submit' value='Modificar'></td>
+            <td><input name='Modificar' type = 'submit' value='Modificar'></td>
 			</form>
             </tr>";
     }
+    echo "</table>";
+
+    // Formulario para añadir nueva categoría
+    echo "<h2>Añadir nueva categoría</h2>";
+    echo "<table>"; //abrir la tabla
+    echo "<tr><th>Nombre</th><th>Descripción</th><th></tr>";
+    echo "<tr>
+            <form action = 'modificar_categorias.php' method = 'POST'>
+            <td><input name = ':nombre' value = ''></td>
+            <td><input name = ':descripcion' value = ''></td>
+            <td><input name=':agregar' type = 'submit' value='Añadir'></td>
+			</form>
+            </tr>";
     echo "</table>";
 }
 ?>

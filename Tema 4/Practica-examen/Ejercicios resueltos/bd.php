@@ -45,6 +45,12 @@ function leer_cookie($nombre_cookie, $valor_por_defecto = FALSE) {
     }
 }
 
+function bdAux(){
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    return $bd;
+}
+
 // Funcion que actualiza la categoría modificada en el formulario
 function actualizar_categoria($datos) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
@@ -53,6 +59,21 @@ function actualizar_categoria($datos) {
 	nombre = :nombre,
 	descripcion = :descripcion
 	WHERE CodCat = :CodCat");
+    $resul = $preparada->execute($datos);
+    return $resul;
+}
+
+// Funcion que actualiza el producto modificada en el formulario
+function actualizar_producto($datos) {
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $preparada = $bd->prepare("UPDATE productos SET 
+	nombre = :nombre,
+	descripcion = :descripcion,
+    peso = :peso,
+    stock = :stock,
+    CodCat = :CodCat
+	WHERE CodProd = :CodProd");
     $resul = $preparada->execute($datos);
     return $resul;
 }
@@ -85,6 +106,25 @@ function actualizar_clave($datos) {
     return $resul;
 }
 
+function alta_categoria($datos) {
+    $bd = bdAux();
+    unset($datos[':agregar']);
+    $preparada = $bd->prepare("Insert into categorias values (default, :nombre, :descripcion)");
+    $resul = $preparada->execute($datos);
+    return $resul;
+
+}
+
+function alta_producto($datos) {
+    $bd = bdAux();
+    unset($datos[':agregar']);
+    $preparada = $bd->prepare("Insert into productos values (
+    :CodProd, :nombre, :descripcion, :peso, :stock, :CodCat)");
+    $resul = $preparada->execute($datos);
+    return $resul;
+
+}
+
 function alta_restaurante($datos) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
@@ -111,9 +151,9 @@ function cargar_categorias() {
     if (!$resul) {
         return FALSE;
     }
-    if ($resul->rowCount() === 0) {
-        return FALSE;
-    }
+   if ($resul->rowCount() === 0) {
+       return FALSE;
+   }
     //si hay 1 o más
     return $resul->fetchALL(PDO::FETCH_ASSOC);
 }
@@ -126,9 +166,9 @@ function cargar_categoria($codCat) {
     if (!$resul) {
         return FALSE;
     }
-    if ($resul->rowCount() === 0) {
-        return FALSE;
-    }
+   if ($resul->rowCount() === 0) {
+       return FALSE;
+   }
     //si hay 1 o más
     return $resul->fetch();
 }
@@ -141,9 +181,9 @@ function cargar_productos_categoria($codCat) {
     if (!$resul) {
         return FALSE;
     }
-    if ($resul->rowCount() === 0) {
-        return FALSE;
-    }
+    // if ($resul->rowCount() === 0) {
+    //     return FALSE;
+    // }
     //si hay 1 o más
     return $resul;
 }
@@ -226,7 +266,7 @@ function comprobar_usuario($nombre, $clave) {
 }
 
 // Función para transformar una consulta en formato carrito CodProd:cantidad
-function consulta_a_carrito($array){
+function consulta_a_carrito($array) {
 
     $carrito = array();
 
@@ -314,7 +354,7 @@ function falta_stock($carrito) {
         }
     }
 
-    if(count($faltan) > 0) {
+    if (count($faltan) > 0) {
         return $faltan;
     } else {
         return false;
@@ -324,7 +364,7 @@ function falta_stock($carrito) {
 }
 
 // Función que devuelve el nombre de una categoría buscando por su código
-function get_categoria($codigo){
+function get_categoria($codigo) {
 
     $sql = "Select nombre from categorias where CodCat = $codigo";
     $resultado = select($sql);
@@ -381,7 +421,6 @@ function insertar_sin_stock($envio_pendiente, $pedido) {
     $bd->commit();
 
 }
-
 
 
 // Ejecuta cierta sentencia select $sql y devuelve un array con los resultados
