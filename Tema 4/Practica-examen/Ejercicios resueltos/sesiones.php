@@ -11,3 +11,9 @@ function comprobar_admin(){
 		header("Location: categorias.php");
 	}		
 }
+
+function comprobar_gestion() {
+    if($_SESSION['usuario']['Rol'] == 2 && $_SESSION['usuario']['Rol'] == 1){
+        header("Location: categorias.php");
+    }
+}

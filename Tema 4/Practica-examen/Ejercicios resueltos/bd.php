@@ -45,6 +45,19 @@ function leer_cookie($nombre_cookie, $valor_por_defecto = FALSE) {
     }
 }
 
+// Funcion que actualiza la categoría modificada en el formulario
+function actualizar_categoria($datos) {
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $preparada = $bd->prepare("UPDATE categorias SET 
+	nombre = :nombre,
+	descripcion = :descripcion
+	WHERE CodCat = :CodCat");
+    $resul = $preparada->execute($datos);
+    return $resul;
+}
+
+
 function actualizar_restaurante($datos) {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
@@ -93,7 +106,7 @@ function alta_restaurante($datos) {
 function cargar_categorias() {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
-    $ins = "SELECT CodCat, Nombre FROM categorias";
+    $ins = "SELECT CodCat, Nombre, Descripcion FROM categorias";
     $resul = $bd->query($ins);
     if (!$resul) {
         return FALSE;
