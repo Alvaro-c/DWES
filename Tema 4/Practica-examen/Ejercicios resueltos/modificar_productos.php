@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST[':agregar'])) {
 if (isset($_GET['categoria'])) {
     $cat = cargar_categoria($_GET['categoria']);
     $_SESSION['cat'] = $_GET['categoria'];
-    $productos = cargar_productos_categoria($_GET['categoria']);
+    $productos = cargar_productos_categoria_gestion($_GET['categoria']);
     echo "<h1>Modificar productos de categoría " . $cat['Nombre'] . "</h1>";
     echo "<p>" . $cat['Descripcion'] . "</p>";
 
@@ -59,7 +59,7 @@ if (isset($_GET['categoria'])) {
 } else {
     // Aprovecho la función cargar_productos_categoria()
     // haciendo injección SQL para jugar un poco con el código y buscarle las vueltas
-    $productos = cargar_productos_categoria(" 0 or 1=1 --");
+    $productos = cargar_productos_categoria_gestion(" 0 or 1=1 --");
     echo "<h1>Modificar productos</h1>";
 }
 

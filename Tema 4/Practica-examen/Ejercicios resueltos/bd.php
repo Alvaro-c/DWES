@@ -109,7 +109,7 @@ function actualizar_clave($datos) {
 function alta_categoria($datos) {
     $bd = bdAux();
     unset($datos[':agregar']);
-    $preparada = $bd->prepare("Insert into categorias values (default, :nombre, :descripcion)");
+    $preparada = $bd->prepare("Insert into categorias values (default, :nombre, :descripcion, default)");
     $resul = $preparada->execute($datos);
     return $resul;
 
@@ -119,7 +119,7 @@ function alta_producto($datos) {
     $bd = bdAux();
     unset($datos[':agregar']);
     $preparada = $bd->prepare("Insert into productos values (
-    :CodProd, :nombre, :descripcion, :peso, :stock, :CodCat)");
+    :CodProd, :nombre, :descripcion, :peso, :stock, default, :CodCat)");
     $resul = $preparada->execute($datos);
     return $resul;
 
@@ -181,9 +181,26 @@ function cargar_productos_categoria($codCat) {
     if (!$resul) {
         return FALSE;
     }
-    // if ($resul->rowCount() === 0) {
-    //     return FALSE;
-    // }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
+    //si hay 1 o más
+    return $resul;
+}
+
+// Esta función hace lo mismo que la anterior, pero sí muestra una categoría vacía en lugar de arrojar un error
+// Es sólo para los gestores de produtos
+function cargar_productos_categoria_gestion($codCat) {
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $sql = "SELECT * FROM productos WHERE Codcat  = $codCat AND Stock >= " . leer_cookie('stock', 0);
+    $resul = $bd->query($sql);
+    if (!$resul) {
+        return FALSE;
+    }
+    //if ($resul->rowCount() === 0) {
+    //    return FALSE;
+    //}
     //si hay 1 o más
     return $resul;
 }
@@ -333,12 +350,79 @@ function eliminar_restaurante($datos) {
 }
 
 function eliminar_categorias($codCat) {
-    //todo
 
+    $bd = bdAux();
+    $datos = array(':codCat' => $codCat);
+    // busco si existe la categoría
+    $preparada = $bd->prepare("SELECT CodCat from categorias where CodCat = :codCat");
+    $preparada->execute($datos);
+    //Si no existe, devolvemos falso.
+    if ($preparada->rowCount() !== 1) {
+        return false;
+    } else {
+        // comienzo la transaccion
+        $bd->beginTransaction();
+        // Si existe, busco los codigos de productos de los productos de la categoría
+        $productos = cargar_productos_categoria($codCat);
+
+        // Elimino cada producto o lo descatalogo, con la funcion eliminar productos
+        foreach ($productos as $producto) {
+            $cod = $producto['CodProd'];
+            if (!eliminar_productos($cod)){
+                $bd->rollback();
+                return false;
+            }
+        }
+        $bd->commit();
+        return true;
+    }
 }
 
+// Esta función elimina productos si no están en la tabla pedidosproductos o productos pendientes
+// Si están en alguna de esas dos tablas, los descataloga
 function eliminar_productos($codProd) {
-    //todo
+    $bd = bdAux();
+    $datos = array(':codProd' => $codProd);
+    // busco si existe el producto
+    $preparada = $bd->prepare("SELECT CodProd from productos where CodProd = :codProd");
+    $preparada->execute($datos);
+    //Si no existe, devolvemos falso.
+    if ($preparada->rowCount() !== 1) {
+        return false;
+    } else {
+        // Compruebo si el producto está en las tablas pedidosproductos o en productospendientes
+        // pedidosproductos
+        $preparada = $bd->prepare("select p.CodProd 
+        from productos p join pedidosproductos p2 on p.CodProd = p2.CodProd where p.CodProd = :codProd");
+        $preparada->execute($datos);
+        $pedidosproductos = $preparada->rowCount();
+
+        //productospendientes
+        $preparada = $bd->prepare("select p.CodProd 
+        from pedidos.productos p join pedidos.productospendientes p2 on p.CodProd = p2.CodProd where p.CodProd = :codProd");
+        $preparada->execute($datos);
+        $productospendientes = $preparada->rowCount();
+
+
+        // en caso de que el producto esté en alguna de las dos tablas, se descataloga
+        if ($pedidosproductos != 0 || $productospendientes != 0) {
+            $preparada = $bd->prepare("UPDATE pedidos.productos t
+            SET t.Descatalogado = 1
+            WHERE t.CodProd = :codProd;");
+            $preparada->execute($datos);
+            return true;
+
+        } else {
+            // en caso contrario (no está en esas tablas) se elimina definitivamente
+            $preparada = $bd->prepare("DELETE
+            FROM pedidos.productos
+            WHERE CodProd = :codProd;");
+            $preparada->execute($datos);
+            return true;
+
+        }
+
+    }
 
 }
 
@@ -419,8 +503,8 @@ function insertar_sin_stock($envio_pendiente, $pedido) {
     $bd->beginTransaction();
 
     foreach ($envio_pendiente as $codProd => $unidades) {
-        $sql = "INSERT INTO productospendientes(CodPed, CodProd, UdPend) 
-		             VALUES( $pedido, $codProd, $unidades)";
+        $sql = "INSERT INTO productospendientes
+		             VALUES( default, $pedido, $codProd, $unidades)";
         $resul = $bd->query($sql);
         if (!$resul) {
             $bd->rollback();

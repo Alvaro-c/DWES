@@ -3,7 +3,6 @@
  <?php 
  if ($_SESSION['usuario']['Rol'] == 1){
      echo "<a href='zonaadmin.php'>Administración &nbsp;</a>";
-     echo "<a href='zona_pedidos.php'>Gestión de productos y pedidos &nbsp;</a>";
  }
  // Si el usuario tiene rol 2 se muestra la gestión de productos y pedidos
  if ($_SESSION['usuario']['Rol'] == 2) {

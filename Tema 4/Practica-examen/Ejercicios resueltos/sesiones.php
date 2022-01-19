@@ -13,7 +13,7 @@ function comprobar_admin(){
 }
 
 function comprobar_gestion() {
-    if($_SESSION['usuario']['Rol'] == 2 && $_SESSION['usuario']['Rol'] == 1){
+    if($_SESSION['usuario']['Rol'] != 2){
         header("Location: categorias.php");
     }
 }
