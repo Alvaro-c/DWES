@@ -1,1 +1,4 @@
-4 - admin@empresa.com 41 2 Azúcar 25 - gestion 42 7 producto de prueba 4
+5; gestion; 46; 2022-01-21 01:02:25; 2; Azúcar; 1
+5; gestion; 46; 2022-01-21 01:02:25; 7; producto de prueba; 1
+5; gestion; 47; 2022-01-21 01:02:34; 5; Cerveza Alhambra tercio; 2
+5; gestion; 48; 2022-01-21 01:02:47; 6; Vino tinto Rioja 0.75; 12

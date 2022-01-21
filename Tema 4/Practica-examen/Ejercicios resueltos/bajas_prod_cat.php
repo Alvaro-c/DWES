@@ -82,7 +82,15 @@ if (isset($_GET['seleccion']) && $_GET['seleccion'] == 'Categorias') {
 
 // Aprovecho la función cargar_productos_categoria()
 // haciendo injección SQL para jugar un poco con el código y buscarle las vueltas
-    $productos = cargar_productos_categoria(" 0 or 1=1 --");
+    if (leer_cookie('descatalogado', 0) == 1) {
+        // Se quieren ver todos los productos
+        // Aprovecho la función cargar_productos_categoria()
+        // haciendo injección SQL para jugar un poco con el código y buscarle las vueltas
+        $productos = cargar_productos_categoria_gestion(" 0 or 1=1 --");
+    } else {
+        // no se quieren ver los productos descatalogados
+        $productos = cargar_productos_categoria_gestion_descat(0);
+    }
     echo "<h2>Eliminar productos</h2>";
 
     echo "<table>"; //abrir la tabla

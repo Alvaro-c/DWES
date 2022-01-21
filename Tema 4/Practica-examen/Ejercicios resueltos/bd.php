@@ -258,6 +258,26 @@ function cargar_productos($codigosProductos) {
     }
 }
 
+function cargar_productos_pendientes(){
+    $bd = bdAux();
+
+    // busco si existe la categoría
+    $ins = "select restaurantes.CodRes, restaurantes.Correo, p2.CodPed, p.Fecha, p2.CodProd, p3.Nombre, p2.UdPend
+    from restaurantes join pedidos p on restaurantes.CodRes = p.Restaurante
+    join productospendientes p2 on p.CodPed = p2.CodPed join productos p3 on p2.CodProd = p3.CodProd;";
+    $resul = $bd->query($ins);
+    if (!$resul) {
+        return FALSE;
+    }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
+    //si hay 1 o más
+    return $resul;
+
+
+}
+
 function cargar_restaurantes() {
     $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
     $bd = new PDO($res[0], $res[1], $res[2]);
@@ -295,6 +315,41 @@ function cargar_sin_stock($faltan) {
     echo "</tr></table>";
     echo "<form action='procesar_pedido.php' method='post'><input type='submit' class='boton'  name='tramitar' value='Tramitar pedido'></form>";
 
+
+}
+
+// Esta función comprueba si los pedidos con Enviado = 1 tienen productos pendientes y los actualiza
+function comprobar_pedidos_pendientes($CodPed){
+    $bd = bdAux();
+    // Compruebo si quedan productos pendientes en el pedido actualizado
+    $query = "select * from productospendientes where CodPed = $CodPed;";
+    $result = $bd->query($query);
+    // Si hay resultados no hago nada porque aún hay productos pendientes
+    if ($result->rowCount() >0){
+        return true;
+    } else {
+        // Si no hay resultados, el pedido ya no tiene productos pendientes, se actualiza el campo enviado a 0
+        $query = "UPDATE pedidos.pedidos t SET t.Enviado = 0 WHERE t.CodPed = $CodPed;";
+        $result = $bd->query($query);
+        if ($result){
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+
+}
+
+function comprobar_pendientes($CodProd, $CodPed){
+
+    $bd = bdAux();
+    // Se elimina el producto de la tabla productos pendientes
+    $query = "delete from productospendientes where CodProd = $CodProd and CodPed = $CodPed;";
+    $bd->query($query);
+    // Se comprueba si los pedidos con Enviado = 1 tienen productos pendientes
+    comprobar_pedidos_pendientes($CodPed);
 
 }
 
@@ -460,6 +515,36 @@ function eliminar_productos($codProd) {
     }
 
 }
+
+function exportar_txt($datos) {
+
+    $fich = fopen('envios_pendientes.txt', 'w');
+    if ($fich === False){
+        echo "Error al abrir o crear el fichero<br>";
+    } else{
+
+        foreach ($datos as $producto){
+            $CodRes = $producto['CodRes'];
+            $Correo = $producto['Correo'];
+            $CodPed = $producto['CodPed'];
+            $Fecha = $producto['Fecha'];
+            $CodProd = $producto['CodProd'];
+            $Nombre = $producto['Nombre'];
+            $UdPend = $producto['UdPend'];
+
+            fprintf($fich, "%s; %s; %s; %s; %s; %s; %s", $CodRes, $Correo, $CodPed, $Fecha, $CodProd, $Nombre, $UdPend);
+            fprintf($fich, "%s", "\n");
+
+        }
+
+
+
+    }
+
+
+}
+
+
 
 // Ejercicio 2:
 function falta_stock($carrito) {
