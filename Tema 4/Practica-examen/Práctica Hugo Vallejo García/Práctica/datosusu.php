@@ -11,7 +11,6 @@ comprobar_admin();
 <head>
 	<meta charset="UTF-8">
 	<title>Listado de usuarios</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>

@@ -8,8 +8,7 @@
 <html>
 	<head>
 		<meta charset = "UTF-8">
-		<title>Carrito de la compra</title>
-        <link rel="stylesheet" href="style.css">
+		<title>Carrito de la compra</title>		
 	</head>
 	<body>
 		
