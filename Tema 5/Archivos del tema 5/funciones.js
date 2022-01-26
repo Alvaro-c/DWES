@@ -26,19 +26,20 @@ function categorias() {
 	return false;
 }
 
-function hora(){
+function hora() {
 
 	let horaHTML = document.getElementById('horaHTML');
 	let xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function (){
+	xhttp.onreadystatechange = function () {
 
-		if(this.readyState == 4 && this.status == 200) {
+		if (this.readyState == 4 && this.status == 200) {
 			horaHTML.innerHTML = this.response;
 		}
 	}
 
 	xhttp.open("GET", "hora_servidor.php");
 	xhttp.send();
+
 
 	return false;
 }
