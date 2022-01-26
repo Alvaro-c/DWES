@@ -20,7 +20,7 @@ function suma() {
             result = this.response;
             // Llamada a la función que escribe el resultado
             mostrarResult(result);
-            console.log(result);
+            
         }
     }
     xhttp.open("POST", `ejercicio2.php`);
