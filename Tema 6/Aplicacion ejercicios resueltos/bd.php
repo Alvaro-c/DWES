@@ -143,3 +143,33 @@ function getCategoria($CodProd) {
 		return $resul;
 }
 
+
+// Ejercicio 6: Esta función se llama cuando se procesa un pedido. Actualiza el stock restando los productos del carrito
+function actualizar_stock($productos){
+
+	$res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+	$bd = new PDO($res[0], $res[1], $res[2]);
+
+	// para cada producto obtengo el stock actual y el que debería tener
+	foreach ($productos as $CodProd => $unidades) {
+
+		// Obtengo el stock original
+		$query = "select Stock from productos where CodProd = $CodProd";
+		$stockOrig = $bd->query($query);
+		$stockOrig = $stockOrig->fetchALL(PDO::FETCH_ASSOC);
+		$stockOrig = $stockOrig[0]['Stock'];
+		
+		// Actualizo el producto en concreto con el nuevo stock
+		$nuevoStock = $stockOrig - $unidades;
+
+		$query = "UPDATE pedidos.productos t SET t.Stock = $nuevoStock WHERE t.CodProd = $CodProd;";
+		$result = $bd->query($query);
+		// Si ha habido algún error, devuelve falso y no continúa
+		if (!$result) {
+			return false;
+		}
+
+	}
+
+	return true;
+}

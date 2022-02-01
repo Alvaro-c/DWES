@@ -20,6 +20,7 @@ function cargarCarrito() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
+			// Ejercicio 3: Cambio del elemento donde se dibuja el carrito al div lateral
 			var contenido = document.getElementById("carrito");
 			contenido.style.display = "display";
 			contenido.innerHTML = "";
@@ -103,7 +104,8 @@ function cargarProductos(destino) {
 	return false;
 }
 
-// Ejercicio 2: La función muestra una ventana de confirmación. Si se confirma, se llama a procesar pedido, sino, se vuelve a cargar el carrito.
+// Ejercicio 2: La función muestra una ventana de confirmación. 
+// Si se confirma, se llama a procesar pedido, sino, se vuelve a cargar el carrito.
 function confirmarPedido() {
 
 	if (confirm('¿Seguro que desea procesar el pedido?')) {
@@ -194,13 +196,9 @@ function eliminarProductos(formulario) {
 		if (this.readyState == 4 && this.status == 200) {
 
 			alert("Producto eliminado con éxito");
-			// Comentado para resolver el ejercicio 1
-			//cargarCarrito();
-			// TODO
-			// let cod = params.split('&')[0].split('=')[1];
-			// let cat = getCategoria(cod);
-			// cargarProductos(`productos_json.php?categoria=${cat}`);
-			cargarCategorias();
+			// Ejercicio 5: Eliminar el html del carrito y recargarlo para reflejar los cambios
+			document.getElementById('carrito').innerHTML = '';
+			cargarCarrito();
 
 		}
 	};
@@ -222,6 +220,7 @@ function procesarPedido() {
 			titulo.innerHTML = "Estado del pedido";
 			if (this.responseText == "TRUE") {
 				contenido.innerHTML = "Pedido realizado";
+				document.getElementById('carrito').innerHTML = '';
 			} else {
 				contenido.innerHTML = "Error al procesar el pedido";
 			}

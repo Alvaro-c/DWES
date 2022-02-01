@@ -21,7 +21,7 @@ function login(formu) {
 		if (this.readyState == 4 && this.status == 200) {
 			if (this.responseText === "FALSE") {
 				alert("Revise usuario y contraseña");
-				// Compruebo si el rol es 1 (admin) y si lo es, cargo el enlace correspondiente
+				// Ejercicio 4: Compruebo si el rol es 1 (admin) y si lo es, cargo el enlace correspondiente
 			} else if (this.response == '1') {
 				document.getElementById("principal").style.display = "block";
 				document.getElementById("login").style.display = "none";

@@ -6,6 +6,27 @@
 	<meta charset="UTF-8">
 	<script type="text/javascript" src="js/cargarDatos.js"></script>
 	<script type="text/javascript" src="js/sesion.js"></script>
+	<style>
+		/*Ejercicio 3: Estilo para que el carrito aparezca siempre en un lateral*/
+		* {
+			box-sizing: border-box;
+		}
+
+		#main {
+			display: grid;
+			grid-template-columns: 2fr 1fr;
+		}
+
+		#contCarrito {
+
+			border: solid 1px black;
+			padding: 1%;
+			margin-right: 4%;
+			box-shadow: 1px 1px 1px 1px grey;
+			border-radius: 5%;
+		}
+
+	</style>
 </head>
 
 <body>
@@ -25,17 +46,21 @@
 		</header>
 		<hr>
 		<h2 id="titulo"></h2>
+		<div id="main">
+			<section id="contenido">
+			</section>
 
-		<section id="contenido">
-		</section>
-		<h2 id="titCarrito"></h2>
-		<section id="carrito">
-			
-		</section>
+			<div id="contCarrito">
+				<h2 id="titCarrito"></h2>
+				<section id="carrito">
+
+				</section>
+			</div>
+		</div>
 
 	</section>
 
-	
+
 
 	</section>
 </body>

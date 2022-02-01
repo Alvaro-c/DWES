@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$_SESSION['usuario'] = $usu;
 		$_SESSION['carrito'] = [];
 		$rol = $_SESSION['usuario']['Rol'];
+		// Ejercicio 4: Cambiado el echo para que devuelva el rol
 		echo $rol;
 	}	
 }
