@@ -3,7 +3,10 @@ function anadirProductos(formulario) {
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
 			alert("Producto añadido con éxito");
+			// Cada vez que se añade un producto se actualiza el carrito y se muestra con la última info
 			cargarCarrito();
+			// Comentado para resolver el ejercicio 1
+			// CargarCarrito(); 
 		}
 	};
 	var params = "cod=" + formulario.elements['cod'].value + "&unidades=" + formulario.elements['unidades'].value;
@@ -17,9 +20,10 @@ function cargarCarrito() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
-			var contenido = document.getElementById("contenido");
+			var contenido = document.getElementById("carrito");
+			contenido.style.display = "display";
 			contenido.innerHTML = "";
-			var titulo = document.getElementById("titulo");
+			var titulo = document.getElementById("titCarrito");
 			titulo.innerHTML = "Carrito de la compra";
 			try {
 				var filas = JSON.parse(this.responseText);
@@ -29,7 +33,8 @@ function cargarCarrito() {
 				var procesar = document.createElement("a");
 				procesar.href = "#";
 				procesar.innerHTML = "Realizar pedido";
-				procesar.onclick = function () { return procesarPedido(); };
+				// Ejercicio 2: Se modifica la llamada a la función para que el usuario confirme el pedido
+				procesar.onclick = function () { return confirmarPedido(); };
 				contenido.appendChild(procesar);
 			} catch (e) {
 				var mensaje = document.createElement("p");
@@ -44,6 +49,8 @@ function cargarCarrito() {
 	return false;
 }
 
+
+
 function cargarCategorias() {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
@@ -55,12 +62,14 @@ function cargarCategorias() {
 				vinculo = crearVinculoCategorias(cats[i].nombre, cats[i].codCat);
 				elem.appendChild(vinculo);
 				lista.appendChild(elem);
+				
 			}
 			var contenido = document.getElementById("contenido");
 			contenido.innerHTML = "";
 			var titulo = document.getElementById("titulo");
 			titulo.innerHTML = "Categorías";
 			contenido.appendChild(lista);
+			cargarCarrito();
 		}
 	};
 	xhttp.open("GET", "categorias_json.php", true);
@@ -88,9 +97,25 @@ function cargarProductos(destino) {
 			}
 		}
 	};
+	console.log(destino);
 	xhttp.open("GET", destino, true);
 	xhttp.send();
 	return false;
+}
+
+// Ejercicio 2: La función muestra una ventana de confirmación. Si se confirma, se llama a procesar pedido, sino, se vuelve a cargar el carrito.
+function confirmarPedido() {
+
+	if (confirm('¿Seguro que desea procesar el pedido?')) {
+
+		procesarPedido();
+
+	} else {
+		cargarCarrito();
+	}
+
+	return false;
+
 }
 
 function crear_fila(campos, tipo) {
@@ -167,9 +192,16 @@ function eliminarProductos(formulario) {
 	var xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function () {
 		if (this.readyState == 4 && this.status == 200) {
-			
+
 			alert("Producto eliminado con éxito");
-			cargarCarrito();
+			// Comentado para resolver el ejercicio 1
+			//cargarCarrito();
+			// TODO
+			// let cod = params.split('&')[0].split('=')[1];
+			// let cat = getCategoria(cod);
+			// cargarProductos(`productos_json.php?categoria=${cat}`);
+			cargarCategorias();
+
 		}
 	};
 	var params = "cod=" + formulario.elements['cod'].value + "&unidades=" + formulario.elements['unidades'].value;
@@ -199,3 +231,20 @@ function procesarPedido() {
 	xhttp.send();
 	return false;
 }
+
+function getCategoria(codProd) {
+
+
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function categoria() {
+		if (this.readyState == 4 && this.status == 200) {
+			respuesta = JSON.parse(this.responseText)[0].CodCat;
+
+		}
+	};
+	xhttp.open("GET", `getCategoria.php?CodProd=${codProd}`, true);
+	xhttp.send();
+	return respuesta;
+
+}
+
