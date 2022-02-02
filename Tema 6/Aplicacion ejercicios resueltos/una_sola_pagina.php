@@ -26,6 +26,10 @@
 			border-radius: 5%;
 		}
 
+		td input {
+			width: 100px;
+		}
+
 	</style>
 </head>
 

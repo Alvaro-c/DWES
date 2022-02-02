@@ -1,0 +1,1 @@
+Algunos ejercicios tienen rutas relativas, por los que para que funcionen correctamente tienen que extraerse con los mismos nombres y directorios

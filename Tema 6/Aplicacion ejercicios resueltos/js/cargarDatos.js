@@ -130,6 +130,41 @@ function crear_fila(campos, tipo) {
 	return fila;
 }
 
+// Función para crear cada línea de la tabla restaurantes
+function crear_forms(campos, tipo) {
+	
+	let fila = document.createElement("tr");
+	let form = document.createElement('form');
+	fila.appendChild(form);
+
+	for (var i = 0; i < campos.length; i++) {
+		let celda = document.createElement('td');
+		fila.appendChild(celda);
+		let input = document.createElement(tipo);
+		input.value = campos[i];
+		celda.appendChild(input);
+		
+	}
+	
+	return fila;
+}
+
+function crear_forms2(campos, tipo) {
+	
+	let  fila = document.createElement("tr");
+
+	for (var i = 0; i < campos.length; i++) {
+		let celda = document.createElement('td');
+		fila.appendChild(celda);
+		let input = document.createElement(tipo);
+		input.value = campos[i];
+		celda.appendChild(input);
+		
+	}
+
+	return fila;
+}
+
 function crearFormulario(texto, cod, funcion) {
 	var formu = document.createElement("form");
 	var unidades = document.createElement("input");
@@ -155,7 +190,7 @@ function crearTablaCarrito(productos) {
 	tabla.appendChild(cabecera);
 	for (var i = 0; i < productos.length; i++) {
 		/*formulario*/
-		formu = crearFormulario("Eliminar", productos[i]['CodProd'], eliminarProductos);
+		formu = crearFormulario("Eliminar", productos[i]['CodProd'], 'test');
 		fila = crear_fila([productos[i]['CodProd'], productos[i]['Nombre'], productos[i]['Descripcion'], productos[i]['unidades']], "td");
 		celda_form = document.createElement("td");
 		celda_form.appendChild(formu);
@@ -176,6 +211,23 @@ function crearTablaProductos(productos) {
 		celda_form = document.createElement("td");
 		celda_form.appendChild(formu);
 		fila.appendChild(celda_form);
+		tabla.appendChild(fila);
+	}
+	return tabla;
+}
+
+// Función copiada de crearTablaProductos y adaptada para restaurantes
+function crearTablaRestaurantes(restaurantes) {
+	var tabla = document.createElement("table");
+	var cabecera = crear_fila(["CodRes", "Correo", "Pais", "CP", "Ciudad", "Dirección", "Rol", "Actualizar"], "th");
+	tabla.appendChild(cabecera);
+	for (var i = 0; i < restaurantes.length; i++) {
+		/*formulario*/
+		// formu = crearFormulario("Actualizar", restaurantes[i]['CodRes'], actualizarRestaurantes);
+		fila = crear_forms([restaurantes[i]['CodRes'], restaurantes[i]['Correo'], restaurantes[i]['Pais'], restaurantes[i]['CP'], restaurantes[i]['Ciudad'], restaurantes[i]['Direccion'], restaurantes[i]['Rol']], "input");
+		// celda_form = document.createElement("td");
+		// celda_form.appendChild(formu);
+		// fila.appendChild(celda_form);
 		tabla.appendChild(fila);
 	}
 	return tabla;
@@ -247,3 +299,39 @@ function getCategoria(codProd) {
 
 }
 
+
+// Nuevo Ejercicio 6: Función que carga el menú de admin
+
+function zonaAdmin() {
+
+	let contenido = document.getElementById('contenido');
+	contenido.innerHTML = '';
+
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function () {
+
+		if (this.readyState == 4 && this.status == 200) {
+			
+			var res = document.getElementById("contenido");
+			var titulo = document.getElementById("titulo");
+			titulo.innerHTML = "Restaurantes";
+			let filas = JSON.parse(this.responseText);
+			var tabla = crearTablaRestaurantes(filas);
+				res.innerHTML = "";
+				res.appendChild(tabla);
+
+		}
+
+	}
+
+	xhttp.open('GET', 'restaurantes_json.php');
+	xhttp.send();
+
+return false;
+
+}
+
+function actualizarRestaurantes(){
+
+	return false;
+}

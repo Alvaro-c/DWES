@@ -103,6 +103,23 @@ function cargar_productos($codigosProductos)
 		return $resul;
 	}
 }
+
+function cargar_restaurantes() {
+    $res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");
+    $bd = new PDO($res[0], $res[1], $res[2]);
+    $ins = "SELECT * FROM restaurantes";
+    $resul = $bd->query($ins);
+    if (!$resul) {
+        return FALSE;
+    }
+    if ($resul->rowCount() === 0) {
+        return FALSE;
+    }
+    //si hay 1 o más
+    return $resul;
+}
+
+
 function insertar_pedido($carrito, $codRes)
 {
 	$res = leer_config(dirname(__FILE__) . "/configuracion.xml", dirname(__FILE__) . "/configuracion.xsd");

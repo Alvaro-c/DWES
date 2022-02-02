@@ -30,7 +30,8 @@ function login(formu) {
 				let header = document.getElementById('cabecera');
 				let linkAdmin = document.createElement('a');
 				linkAdmin.innerText = 'Zona Admin';
-				linkAdmin.href = '#';
+				linkAdmin.href = '';
+				linkAdmin.setAttribute("onclick","return zonaAdmin();");
 				header.appendChild(linkAdmin);
 				cargarCategorias();
 				cargarCarrito();
