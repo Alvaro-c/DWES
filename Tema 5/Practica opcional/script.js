@@ -11,17 +11,22 @@ function inicio() {
 
         // Recojo el input y lo preparo para enviar al sv.
         let rawData = document.getElementById('nums').value;
+        if (rawData != '') {
         let array = prepareArray(rawData);
-        // Muestro los números introducidos
-        mostrarArray(array);
 
-        // Una llamada por cada operación alternando síncronas y asíncronas
-        peticion(array, 'recorrido', 'rec', false);
-        peticion(array, 'media', 'med', true);
-        peticion(array, 'moda', 'mod', false);
-        peticion(array, 'varianza', 'var', true);
-        peticion(array, 'desviacion', 'des', false);
-        peticion(array, 'cuartiles', 'cua', true);
+            // Muestro los números introducidos
+            mostrarArray(array);
+            
+            // Una llamada por cada operación alternando síncronas y asíncronas
+            peticion(array, 'recorrido', 'rec', false);
+            peticion(array, 'media', 'med', true);
+            peticion(array, 'moda', 'mod', false);
+            peticion(array, 'varianza', 'var', true);
+            peticion(array, 'desviacion', 'des', false);
+            peticion(array, 'cuartiles', 'cua', true);
+        } else {
+            document.getElementById('arrayNums').innerText = `No se ha introducido ningún número`;
+        }
 
 
     }
@@ -38,6 +43,7 @@ function inicio() {
         let xhttp = new XMLHttpRequest;
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                document.getElementById(operacion).style.visibility = 'visible';
                 document.getElementById(id).innerText = `${this.response}`;
             }
         }

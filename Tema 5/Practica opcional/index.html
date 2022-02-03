@@ -7,20 +7,25 @@
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Actividad Optativa - Alvaro Cañas</title>
     <script src='script.js'></script>
+    <style>
+        h3 {
+            visibility: hidden;
+        }
+    </style>
 </head>
 
 <body>
 
-    <label for='num'>Introduce una serie de numeros con formato X,X,X </label><input type='text' id='nums'>
+    <label for='num'>Introduce una serie de numeros con formato X,X,X </label><input title="num" type='text' id='nums'>
     <input type='button' id='submit' value='Submit'>
     <p id='arrayNums'></p>
 
-    <h3>Recorrido: <span id="rec"></span></h3>
-    <h3>Media: <span id="med"></span></h3>
-    <h3>Moda: <span id="mod"></span></h3>
-    <h3>Varianza: <span id="var"></span></h3>
-    <h3>Desviación típica: <span id="des"></span></h3>
-    <h3>Cuartiles: <span id="cua"></span></h3>
+    <h3 id="recorrido">Recorrido: <span id="rec"></span></h3>
+    <h3 id="media">Media: <span id="med"></span></h3>
+    <h3 id="moda">Moda: <span id="mod"></span></h3>
+    <h3 id="varianza">Varianza: <span id="var"></span></h3>
+    <h3 id="desviacion">Desviación típica: <span id="des"></span></h3>
+    <h3 id="cuartiles">Cuartiles: <span id="cua"></span></h3>
 
 
     
